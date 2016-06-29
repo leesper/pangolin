@@ -91,13 +91,17 @@ func Start(decorators ...func(profile) profile) interface {
       prof = dec(prof)
     }
 
-    profDir, err := func() {
+    profDir, err := func() (string, error) {
       if prof.path == "" {
         return ioutil.TempDir("", "profile")
       } else {
         return prof.path, os.MkdirAll(prof.path, os.ModePerm)
       }
     }()
+
+    if err != nil {
+      log.Fatalln(err)
+    }
 
     switch prof.mode {
     case CPUMODE:
@@ -111,7 +115,7 @@ func Start(decorators ...func(profile) profile) interface {
         log.Fatalln(err)
       }
       prof.stopper = func() {
-        runtime.StopCPUProfile()
+        pprof.StopCPUProfile()
         f.Close()
       }
 
@@ -157,4 +161,5 @@ func Start(decorators ...func(profile) profile) interface {
 
     return prof
   }
+  panic("Start() already called")
 }
