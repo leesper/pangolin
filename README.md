@@ -39,9 +39,7 @@ The CPU profiling mode is enabled by default, and you can alter behaviours such 
 import "github.com/leesper/pangolin"
 
 func main() {
-    // p.Stop() must be called before the program exits to
-    // ensure profiling information is written to disk.
-    p := pangolin.Start(pangolin.MemProfile, pangolin.ProfilePath("./prof"), pangolin.NoShutdownHook)
+    defer pangolin.Start(pangolin.MemProfile, pangolin.ProfilePath("./prof"), pangolin.NoShutdownHook).Stop()
     ...
 }
 ```
