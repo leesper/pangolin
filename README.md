@@ -19,7 +19,7 @@ Add one line at the top of your main function, and profiling will be enabled dur
 import "github.com/leesper/pangolin"
 
 func main() {
-    defer profile.Start().Stop()
+    defer pangolin.Start().Stop()
     ...
 }
 ```
@@ -36,7 +36,7 @@ decorators
 The CPU profiling mode is enabled by default, and you can alter behaviours such as changing profile directory or enabling memory profiling by passing decorators into pangolin.Start()
 
 ```go
-import "github.com/pkg/pangolin"
+import "github.com/leesper/pangolin"
 
 func main() {
     // p.Stop() must be called before the program exits to
